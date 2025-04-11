@@ -1,6 +1,6 @@
 # Rapport CI/CD – Projet BobApp
 
-## 📦 Objectif du pipeline
+## Objectif du pipeline
 
 Ce projet met en place une chaîne CI/CD complète sur GitHub Actions pour automatiser les tâches suivantes :
 - Vérification de la qualité du code
@@ -11,7 +11,7 @@ Ce projet met en place une chaîne CI/CD complète sur GitHub Actions pour autom
 
 ---
 
-## ⚙️ Étapes du workflow CI/CD
+## Étapes du workflow CI/CD
 
 | Étape                       | Description                                                                 |
 |----------------------------|-----------------------------------------------------------------------------|
@@ -23,28 +23,28 @@ Ce projet met en place une chaîne CI/CD complète sur GitHub Actions pour autom
 
 ---
 
-## 📊 KPIs proposés
+## KPIs proposés
 
-| Indicateur                       | Description                                                                 |
-|----------------------------------|-----------------------------------------------------------------------------|
-| ✅ **Coverage minimal**          | Minimum 70 % de couverture de tests unitaires (back + front)                |
-| ✅ **Zéro bug “blocker”**        | Aucune anomalie critique détectée par SonarCloud                            |
+| Indicateur                 | Description                                                                 |
+|----------------------------|-----------------------------------------------------------------------------|
+| **Coverage minimal**       | Minimum 70 % de couverture de tests unitaires (back + front)                |
+| **Zéro bug “blocker”**     | Aucune anomalie critique détectée par SonarCloud                            |
 
 ---
 
-## 📈 Résultats observés (métriques initiales)
+## Résultats observés (métriques initiales)
 
 | Composant       | Coverage actuel  | Bugs Blocker | Code Smells | Duplications |
 |------------------|------------------|--------------|-------------|--------------|
 | **Back-end**     | à compléter %    | 0            | à compléter | à compléter %|
 | **Front-end**    | à compléter %    | 0            | à compléter | à compléter %|
 
-> 🔍 Ces résultats proviennent du dernier scan SonarCloud (voir [lien vers le projet](https://sonarcloud.io/dashboard?id=KevinWlk_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD))  
-> 📁 Les rapports de couverture sont également stockés dans les artefacts GitHub Actions.
+> Ces résultats proviennent du dernier scan SonarCloud (voir [lien vers le projet](https://sonarcloud.io/dashboard?id=KevinWlk_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD))  
+> Les rapports de couverture sont également stockés dans les artefacts GitHub Actions.
 
 ---
 
-## 💬 Analyse des retours utilisateurs (Notes & Avis)
+## Analyse des retours utilisateurs (Notes & Avis)
 
 | Commentaire utilisateur | Problème détecté |
 |--------------------------|------------------|
@@ -55,7 +55,7 @@ Ce projet met en place une chaîne CI/CD complète sur GitHub Actions pour autom
 
 ---
 
-## ✅ Problèmes identifiés à traiter en priorité
+## Problèmes identifiés à traiter en priorité
 
 1. **Corriger les bugs bloquants côté front** (boutons non fonctionnels)
 2. **Améliorer la réactivité face aux remontées de bugs**
@@ -65,7 +65,7 @@ Ce projet met en place une chaîne CI/CD complète sur GitHub Actions pour autom
 
 ---
 
-## 🧭 Recommandations
+## Recommandations
 
 - **Renforcer la couverture de tests** pour atteindre au moins 80 % (front et back)
 - **Mettre en place un Quality Gate SonarCloud personnalisé** pour bloquer les PR en dessous du seuil de couverture
@@ -74,10 +74,10 @@ Ce projet met en place une chaîne CI/CD complète sur GitHub Actions pour autom
 
 ---
 
-## 📌 Lien utiles
+## Lien utiles
 
 - [SonarCloud du projet](https://sonarcloud.io/dashboard?id=KevinWlk_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD)
 - [Conteneurs Docker sur Docker Hub](https://hub.docker.com/u/kevinwlk)
 - [GitHub Actions du projet](https://github.com/kevinwlk/ton-repo/actions)
 
-🕓 Dernière mise à jour : 11/04/2025
+Dernière mise à jour : 11/04/2025
