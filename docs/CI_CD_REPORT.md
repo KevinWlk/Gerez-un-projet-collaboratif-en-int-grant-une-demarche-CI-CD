@@ -47,27 +47,6 @@ Ce projet met en place une chaîne CI/CD complète sur GitHub Actions pour autom
 
 ---
 
-## Analyse des retours utilisateurs (Notes & Avis)
-
-| Commentaire utilisateur | Problème détecté |
-|--------------------------|------------------|
-| "Impossible de poster une suggestion de blague" | Bug sur le front (bouton qui plante) |
-| "Bug post vidéo non corrigé depuis 2 semaines" | Pas de gestion de backlog / tests non automatisés |
-| "Je ne reçois plus rien depuis une semaine" | Problème possible côté back (cron / scheduler ?) |
-| "Site supprimé de mes favoris" | Dégradation de l’expérience utilisateur |
-
----
-
-## Problèmes identifiés à traiter en priorité
-
-1. **Corriger les bugs bloquants côté front** (boutons non fonctionnels)
-2. **Améliorer la réactivité face aux remontées de bugs**
-   - Mettre en place une gestion de backlog + test automatique sur PR
-3. **Ajouter des tests de bout en bout (E2E)** pour sécuriser les fonctionnalités critiques
-4. **Améliorer les logs et monitoring** pour éviter les interruptions non détectées côté back
-
----
-
 ## Recommandations
 
 - **Renforcer la couverture de tests** pour maintenir >80 % (front et back)
