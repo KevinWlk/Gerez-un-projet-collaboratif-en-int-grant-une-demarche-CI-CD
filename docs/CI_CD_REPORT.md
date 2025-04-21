@@ -4,51 +4,53 @@
 
 Ce projet met en place une chaîne CI/CD complète sur GitHub Actions pour automatiser les tâches suivantes :
 - Vérification de la qualité du code
-- Exécution des tests unitaires
-- Génération de rapports de couverture
-- Analyse SonarCloud
-- Publication d’images Docker sur Docker Hub
+- Exécution des tests unitaires (Back + Front)
+- Génération de rapports de couverture (JaCoCo + Karma)
+- Analyse de la qualité avec SonarCloud
+- Construction et publication des images Docker sur Docker Hub
 
 ---
 
-## Étapes du workflow CI/CD
+## Étapes du workflow CI/CD (Pipeline unifié)
 
-| Étape                       | Description                                                                 |
-|----------------------------|-----------------------------------------------------------------------------|
-| **Tests Back-end**         | Lancement des tests JUnit sur le back avec JaCoCo pour générer le coverage |
-| **Tests Front-end**        | Lancement des tests Angular avec Karma + couverture                        |
-| **Analyse SonarCloud**     | Vérifie les bugs, duplications, complexité et dettes techniques             |
-| **Docker Back**            | Build de l’image Spring Boot et push vers Docker Hub                       |
-| **Docker Front**           | Build de l’image Angular et push vers Docker Hub                           |
+| Étape                      | Description                                                                 |
+|---------------------------|-----------------------------------------------------------------------------|
+| **Tests Back-end**        | Tests JUnit + JaCoCo pour couverture                                        |
+| **Tests Front-end**       | Tests Angular avec Karma + code coverage                                   |
+| **Analyse SonarCloud**    | Analyse statique qualité, duplication, bugs, sécurité                      |
+| **Docker Back**           | Build de l'image backend Spring Boot + push Docker Hub                     |
+| **Docker Front**          | Build de l'image frontend Angular + push Docker Hub                        |
 
 ---
 
 ## Nouvelle structure du workflow (avril 2025)
 
-Depuis la refonte d’avril 2025, les jobs de tests **back** et **front** sont devenus **des prérequis** obligatoires pour les jobs de construction Docker.
+Depuis avril 2025, l’ensemble des étapes CI/CD est intégré dans un **seul fichier GitHub Actions**.
 
-Cela est rendu possible grâce à l’utilisation de la directive `needs: [tests-back, tests-front]`, ce qui permet de garantir que :
+### Ordre de dépendance :
 
-- Les tests unitaires passent **avant** tout build Docker.
-- En cas d’échec de test, **aucun déploiement Docker ne se produit.**
+1. `tests-back` et `tests-front` : s'exécutent en parallèle
+2. `sonarcloud` : s'exécute seulement si les tests sont OK (`needs: [tests-back, tests-front]`)
+3. `build-and-push-back` & `build-and-push-front` : uniquement si SonarCloud est OK (`needs: [sonarcloud]`)
 
-| Job GitHub Actions        | Dépendances                      |
-|---------------------------|----------------------------------|
-| `tests-back`              | -                                |
-| `tests-front`             | -                                |
-| `build-and-push-back`     | `tests-back`, `tests-front`      |
-| `build-and-push-front`    | `tests-back`, `tests-front`      |
+### Avantages :
 
-Cette amélioration sécurise les livraisons en production et renforce la fiabilité du pipeline.
+- Empêche les déploiements Docker si les tests échouent
+- Analyse automatique du code via SonarCloud avant toute livraison
+- Pipeline unifié et maintenable
 
 ---
 
 ## KPIs proposés
 
-| Indicateur                 | Description                                                                 |
-|----------------------------|-----------------------------------------------------------------------------|
-| **Coverage minimal**       | Minimum 70 % de couverture de tests unitaires (back + front)                |
-| **Zéro bug “blocker”**     | Aucune anomalie critique détectée par SonarCloud                            |
+| Indicateur                  | Objectif                                                                 |
+|-----------------------------|--------------------------------------------------------------------------|
+| **Couverture des tests**    | ≥ 70 % (objectif initial pour back et front)                             |
+| **Fiabilité du code**       | Note A sur SonarCloud (0 bug critique)                                   |
+| **Sécurité**                | Note A (aucune vulnérabilité)                                            |
+| **Maintenabilité**          | Note A (dette technique maîtrisée)                                       |
+| **Hotspots de sécurité**    | 100 % examinés                                                           |
+| **Taux de duplication**     | ≤ 3 % (actuellement 0 %)                                                 |
 
 ---
 
@@ -59,8 +61,8 @@ Cette amélioration sécurise les livraisons en production et renforce la fiabil
 | **Back-end**     | **72.7 %**       | **0**        | **0**       | **0.0 %**     |
 | **Front-end**    | **81.5 %**       | **0**        | **0**       | **0.0 %**     |
 
-> Ces résultats proviennent du dernier scan SonarCloud :  
-> [Accéder au tableau de bord](https://sonarcloud.io/summary/new_code?id=KevinWlk_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD)
+> Résultats issus du dernier scan SonarCloud :  
+> https://sonarcloud.io/summary/new_code?id=KevinWlk_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD
 
 > Les rapports de couverture sont également stockés dans les artefacts GitHub Actions.
 
@@ -68,17 +70,18 @@ Cette amélioration sécurise les livraisons en production et renforce la fiabil
 
 ## Recommandations
 
-- **Renforcer la couverture de tests** pour maintenir >80 % (front et back)
-- **Mettre en place un Quality Gate SonarCloud personnalisé** pour bloquer les PR en dessous du seuil de couverture
-- **Suivre l’évolution de la dette technique** via les dashboards SonarCloud
-- **Ajouter une étape de pré-production avec `docker-compose` + test E2E**
+- Augmenter la couverture de tests pour tendre vers 80 % sur le front et le back
+- Mettre en place un **Quality Gate personnalisé SonarCloud** pour bloquer les PR en dessous du seuil
+- Suivre régulièrement la dette technique via le tableau de bord SonarCloud
 
 ---
 
 ## Liens utiles
 
 - [Tableau de bord SonarCloud](https://sonarcloud.io/summary/new_code?id=KevinWlk_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD)
-- [Conteneurs Docker sur Docker Hub](https://hub.docker.com/u/kevinwlk)
-- [GitHub Actions du projet](https://github.com/kevinwlk/Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD/actions)
+- [Images Docker – Docker Hub](https://hub.docker.com/u/kevinwlk)
+- [Workflows GitHub Actions](https://github.com/kevinwlk/Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD/actions)
+
+---
 
 Dernière mise à jour : 21/04/2025
