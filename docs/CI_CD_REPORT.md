@@ -1,4 +1,3 @@
-
 # Rapport CI/CD – Projet BobApp
 
 ## Objectif du pipeline
@@ -21,6 +20,26 @@ Ce projet met en place une chaîne CI/CD complète sur GitHub Actions pour autom
 | **Analyse SonarCloud**     | Vérifie les bugs, duplications, complexité et dettes techniques             |
 | **Docker Back**            | Build de l’image Spring Boot et push vers Docker Hub                       |
 | **Docker Front**           | Build de l’image Angular et push vers Docker Hub                           |
+
+---
+
+## Nouvelle structure du workflow (avril 2025)
+
+Depuis la refonte d’avril 2025, les jobs de tests **back** et **front** sont devenus **des prérequis** obligatoires pour les jobs de construction Docker.
+
+Cela est rendu possible grâce à l’utilisation de la directive `needs: [tests-back, tests-front]`, ce qui permet de garantir que :
+
+- Les tests unitaires passent **avant** tout build Docker.
+- En cas d’échec de test, **aucun déploiement Docker ne se produit.**
+
+| Job GitHub Actions        | Dépendances                      |
+|---------------------------|----------------------------------|
+| `tests-back`              | -                                |
+| `tests-front`             | -                                |
+| `build-and-push-back`     | `tests-back`, `tests-front`      |
+| `build-and-push-front`    | `tests-back`, `tests-front`      |
+
+Cette amélioration sécurise les livraisons en production et renforce la fiabilité du pipeline.
 
 ---
 
@@ -62,4 +81,4 @@ Ce projet met en place une chaîne CI/CD complète sur GitHub Actions pour autom
 - [Conteneurs Docker sur Docker Hub](https://hub.docker.com/u/kevinwlk)
 - [GitHub Actions du projet](https://github.com/kevinwlk/Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD/actions)
 
-Dernière mise à jour : 11/04/2025
+Dernière mise à jour : 21/04/2025
